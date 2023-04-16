@@ -1,7 +1,7 @@
 class Track:
     def __init__(self, item):
         self.id = item["id"]
-        self.atrist_id = item["artists"][0]["id"]
+        self.artist_id = item["artists"][0]["id"]
         self.album_id = item["album"]["id"]
         self.name = item["name"]
         self.artist = item["artists"][0]["name"]

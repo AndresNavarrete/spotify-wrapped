@@ -7,6 +7,9 @@ name = "pypi"
 requests = "*"
 flask = "*"
 python-dotenv = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+pandas = "*"
 
 [dev-packages]
 
