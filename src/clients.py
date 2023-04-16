@@ -18,8 +18,6 @@ class Spotify:
         load_dotenv()
         self.CLIENT_ID = os.getenv("CLIENT_ID")
         self.CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-        self.REDIRECT_URI = os.getenv("REDIRECT_URI")
-        self.ACTIVATION_CODE = os.getenv("ACTIVATION_CODE")
         self.REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
 
         self.items_time_range = "short_term"
