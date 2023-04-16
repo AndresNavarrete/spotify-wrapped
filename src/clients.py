@@ -5,9 +5,10 @@ from urllib.parse import urlencode
 import requests
 from dotenv import load_dotenv
 
-## Documentation
-## Endpoint -  https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
-## Auth     -  https://developer.spotify.com/documentation/web-api/tutorials/code-flow
+# Documentation
+# Endpoint -  https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+# Auth     -  https://developer.spotify.com/documentation/web-api/tutorials/code-flow
+
 
 class Spotify:
     def __init__(self):
@@ -17,10 +18,10 @@ class Spotify:
         self.REDIRECT_URI = os.getenv("REDIRECT_URI")
         self.ACTIVATION_CODE = os.getenv("ACTIVATION_CODE")
         self.REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
-        
+
         self.items_time_range = "short_term"
         self.items_limit = 50
-        
+
         self.access_token = None
         self.top_tracks = None
         self.top_artists = None
@@ -50,7 +51,7 @@ class Spotify:
         )
         tokens = response.json()
         self.access_token = tokens["access_token"]
-    
+
     def get_top_items(self, base_url):
         query_params = {
             "time_range": self.items_time_range,
@@ -66,7 +67,7 @@ class Spotify:
     def fetch_top_tracks(self):
         base_url = "https://api.spotify.com/v1/me/top/tracks"
         self.top_tracks = self.get_top_items(base_url)
-    
+
     def fetch_top_artists(self):
         base_url = "https://api.spotify.com/v1/me/top/artists"
         self.top_artists = self.get_top_items(base_url)

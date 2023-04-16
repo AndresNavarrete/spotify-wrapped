@@ -1,5 +1,5 @@
 from src.clients import Spotify
-from src.models import Track, Artist
+from src.models import Artist, Track
 
 spotify = Spotify()
 tracks = list()

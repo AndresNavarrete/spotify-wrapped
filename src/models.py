@@ -11,6 +11,7 @@ class Track:
     def __str__(self) -> str:
         return f"{self.artist:30} | {self.name:30}"
 
+
 class Artist:
     def __init__(self, item):
         self.id = item["id"]
@@ -18,8 +19,9 @@ class Artist:
         self.spotify_url = item["external_urls"]["spotify"]
         try:
             self.image_url = item["images"][0]["url"]
-        except:
+        except Exception as e:
+            print(f"Error: {e}")
             self.image_url = None
-            
+
     def __str__(self) -> str:
         return f"{self.name}"
