@@ -86,6 +86,7 @@ class Postgres:
         self.PG_PASS = os.getenv("PG_PASS")
         self.engine = None
         self.conn = None
+        self.set_engine()
 
     def set_engine(self):
         uri_str = f"postgresql+psycopg2://{self.PG_USER}:{self.PG_PASS}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
@@ -95,7 +96,7 @@ class Postgres:
     def write_workspace(self, data, table_name):
         data.to_sql(
             table_name,
-            con=self.engine,
+            con=self.conn,
             schema="workspace",
             if_exists="append",
             index=False,
