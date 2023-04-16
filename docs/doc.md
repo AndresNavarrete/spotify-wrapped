@@ -5,7 +5,7 @@
 
 I have followed [this tutorial](https://devopscube.com/install-postgresql-on-ubuntu/) to set up Postgres database on a Ubuntu server. To connect with it we must configure the following enviroment variables. I recommend to have a different enviroment for production and develop. 
 
-```json
+```sh
 PG_USER=""
 PG_PASS=""
 PG_DB=""
@@ -23,7 +23,7 @@ To use Spotify API we must configure an authorizion token. For the purpose of th
 
 Ultimately, you will need these enviroment variables to make it work.
 
-```json
+```sh
 CLIENT_ID=""
 CLIENT_SECRET=""
 REFRESH_TOKEN=""
