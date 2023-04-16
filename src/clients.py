@@ -5,10 +5,11 @@ from urllib.parse import urlencode
 import requests
 from dotenv import load_dotenv
 
+#
 # Documentation
-# Endpoint -  https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+# Endpoint -  https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
 # Auth     -  https://developer.spotify.com/documentation/web-api/tutorials/code-flow
-
+#
 
 class Spotify:
     def __init__(self):
