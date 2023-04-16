@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 # Auth     -  https://developer.spotify.com/documentation/web-api/tutorials/code-flow
 #
 
+
 class Spotify:
     def __init__(self):
         load_dotenv()
