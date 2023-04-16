@@ -17,8 +17,23 @@ class Spotify:
         self.REDIRECT_URI = os.getenv("REDIRECT_URI")
         self.ACTIVATION_CODE = os.getenv("ACTIVATION_CODE")
         self.REFRESH_TOKEN = os.getenv("REFRESH_TOKEN")
+        
+        self.items_time_range = "short_term"
+        self.items_limit = 50
+        
         self.access_token = None
         self.top_tracks = None
+        self.top_artists = None
+
+    def get_top_tracks(self):
+        self.refresh_access_token()
+        self.fetch_top_tracks()
+        return self.top_tracks
+
+    def get_top_artists(self):
+        self.refresh_access_token()
+        self.fetch_top_artists()
+        return self.top_artists
 
     def refresh_access_token(self):
         auth_header = base64.b64encode(
@@ -35,21 +50,23 @@ class Spotify:
         )
         tokens = response.json()
         self.access_token = tokens["access_token"]
-
-    def get_top_tracks(self):
-        self.refresh_access_token()
-        self.fetch_top_tracks()
-        return self.top_tracks
-
-    def fetch_top_tracks(self):
-        base_url = "https://api.spotify.com/v1/me/top/tracks"
+    
+    def get_top_items(self, base_url):
         query_params = {
-            "time_range": "medium_term",
-            "limit": 50,
+            "time_range": self.items_time_range,
+            "limit": self.items_limit,
         }
         url = base_url + "?" + urlencode(query_params)
 
         headersList = {"Authorization": f"Bearer {self.access_token}"}
 
         response = requests.request("GET", url, headers=headersList)
-        self.top_tracks = response.json()["items"]
+        return response.json()["items"]
+
+    def fetch_top_tracks(self):
+        base_url = "https://api.spotify.com/v1/me/top/tracks"
+        self.top_tracks = self.get_top_items(base_url)
+    
+    def fetch_top_artists(self):
+        base_url = "https://api.spotify.com/v1/me/top/artists"
+        self.top_artists = self.get_top_items(base_url)
