@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 
 import requests
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 #
 # Documentation
@@ -73,3 +74,29 @@ class Spotify:
     def fetch_top_artists(self):
         base_url = "https://api.spotify.com/v1/me/top/artists"
         self.top_artists = self.get_top_items(base_url)
+
+
+class Postgres:
+    def __init__(self):
+        load_dotenv()
+        self.PG_HOST = os.getenv("PG_HOST_DEV")
+        self.PG_PORT = os.getenv("PG_PORT_DEV")
+        self.PG_DB = os.getenv("PG_DB")
+        self.PG_USER = os.getenv("PG_USER")
+        self.PG_PASS = os.getenv("PG_PASS")
+        self.engine = None
+        self.conn = None
+
+    def set_engine(self):
+        uri_str = f"postgresql+psycopg2://{self.PG_USER}:{self.PG_PASS}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
+        self.engine = create_engine(uri_str)
+        self.conn = self.engine.connect()
+
+    def write_workspace(self, data, table_name):
+        data.to_sql(
+            table_name,
+            con=self.engine,
+            schema="workspace",
+            if_exists="append",
+            index=False,
+        )
