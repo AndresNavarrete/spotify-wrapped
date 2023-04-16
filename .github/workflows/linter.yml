@@ -12,18 +12,26 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  run-lint:
+  format:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
-
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "main"
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black isort
+      - name: Format and organize code
+        run: |
+          isort . --recursive --atomic
+          black .
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_NAME }}"
+          git add .
+          git commit -m "Auto commit: Code formatter" || echo "No changes to commit"
+          git push
