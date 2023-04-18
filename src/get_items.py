@@ -1,6 +1,18 @@
+import sys
+
 from src.clients import Postgres, Spotify
 from src.datasets import ArtistDataset, TracksDataset
 from src.models import Artist, Track
+
+
+def main():
+    item = sys.argv[1]
+    if item == "artists":
+        get_top_artists()
+    elif item == "tracks":
+        get_top_artists()
+    else:
+        raise SystemExit("Error: incorrect item")
 
 
 def get_top_tracks():
@@ -23,3 +35,7 @@ def get_top_artists():
     tracks_dataset = ArtistDataset(artists)
     dataframe = tracks_dataset.get_dataset()
     postgres.write_workspace(data=dataframe, table_name="artists")
+
+
+if __name__ == "__main__":
+    main()
