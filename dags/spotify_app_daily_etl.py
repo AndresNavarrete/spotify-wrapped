@@ -2,27 +2,27 @@ from datetime import datetime
 
 from airflow import DAG
 from airflow.models import Variable
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash_operator import BashOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 
-from src.top_items import get_top_artists, get_top_tracks
+ROOT_PATH = Variable.get("ROOT_PATH")
+PIPENV_PATH = Variable.get("PIPENV_PATH")
 
-root_folder = Variable.get("root_folder")
 with DAG(
     dag_id="spotify_app_daily_etl",
     start_date=datetime(2023, 3, 18),
     schedule_interval="0 6 * * *",
     catchup=False,
     owner="Andres_Navarrete",
-    template_searchpath=[root_folder],
+    template_searchpath=[ROOT_PATH],
 ) as dag:
-    save_top_tracks = PythonOperator(
-        task_id="get_top_tracks",
-        python_callable=get_top_tracks,
+    save_top_tracks = BashOperator(
+        task_id="save_top_tracks",
+        bash_command=f"cd $ROOT_PATH && $ROOT_PATH/python3 src/get_items.py tracks ",
     )
-    save_top_artists = PythonOperator(
-        task_id="get_top_artists",
-        python_callable=get_top_artists,
+    save_top_artists = BashOperator(
+        task_id="save_top_artists",
+        bash_command=f"cd $ROOT_PATH && $ROOT_PATH/python3 src/get_items.py artists ",
     )
     upsert_tracks = PostgresOperator(
         task_id="upsert_tracks",
