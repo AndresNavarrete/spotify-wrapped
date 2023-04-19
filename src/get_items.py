@@ -10,7 +10,7 @@ def main():
     if item == "artists":
         get_top_artists()
     elif item == "tracks":
-        get_top_artists()
+        get_top_tracks()
     else:
         raise SystemExit("Error: incorrect item")
 
@@ -21,8 +21,8 @@ def get_top_tracks():
 
     tracks = [Track(item) for item in spotify.get_top_tracks()]
 
-    tracks_dataset = TracksDataset(tracks)
-    dataframe = tracks_dataset.get_dataset()
+    dataset = TracksDataset(tracks)
+    dataframe = dataset.get_dataset()
     postgres.write_workspace(data=dataframe, table_name="tracks")
 
 
@@ -30,10 +30,10 @@ def get_top_artists():
     postgres = Postgres()
     spotify = Spotify()
 
-    artists = [Artist(item) for item in spotify.get_top_tracks()]
+    artists = [Artist(item) for item in spotify.get_top_artists()]
 
-    tracks_dataset = ArtistDataset(artists)
-    dataframe = tracks_dataset.get_dataset()
+    dataset = ArtistDataset(artists)
+    dataframe = dataset.get_dataset()
     postgres.write_workspace(data=dataframe, table_name="artists")
 
 

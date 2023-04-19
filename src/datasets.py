@@ -13,7 +13,9 @@ class Dataset:
             self.records.append(new_record)
 
     def set_dataframe(self):
-        self.dataframe = pd.DataFrame.from_records(self.records)
+        self.dataframe = pd.DataFrame.from_records(self.records).drop_duplicates(
+            subset="id", keep="first"
+        )
 
     def get_dataset(self):
         self.set_records()
