@@ -28,3 +28,12 @@ CLIENT_ID=""
 CLIENT_SECRET=""
 REFRESH_TOKEN=""
 ```
+
+## Airflow setup
+
+Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-airflow/stable/start.html) to install Airflow locally. In addition, install the [Postgres Airflow plugin](https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/index.html#installation). Then, add the folowing variables .
+
+* `ROOT_PATH`: The ablosulte root path og the project 
+* `PIPENV_PATH` the python envitoment location. `pipenv --venv` is recommended to find the correct path.
+
+Also, add the `postgres_spotify_app` connection to the connection using the same data from the Database setup section.

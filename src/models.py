@@ -20,7 +20,7 @@ class Artist:
         try:
             self.image_url = item["images"][0]["url"]
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error: {e} on {self.name}")
             self.image_url = None
 
     def __str__(self) -> str:
