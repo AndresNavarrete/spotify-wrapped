@@ -27,11 +27,11 @@ with DAG(
 ) as dag:
     save_top_tracks = BashOperator(
         task_id="save_top_tracks",
-        bash_command=f"cd $ROOT_PATH && $PIPENV_PATH src/get_items.py tracks ",
+        bash_command="bash/save_top_tracks.sh",
     )
     save_top_artists = BashOperator(
         task_id="save_top_artists",
-        bash_command=f"cd $ROOT_PATH && $PIPENV_PATH src/get_items.py artists ",
+        bash_command="bash/save_top_artists.sh",
     )
     upsert_tracks = PostgresOperator(
         task_id="upsert_tracks",
