@@ -1,2 +1,2 @@
 #!/bin/bash
-cd $ROOT_PATH && $PIPENV_PATH src/get_items.py tracks
+cd $ROOT_PATH && $PIPENV_PATH commands/get_items.py tracks

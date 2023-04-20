@@ -4,7 +4,7 @@ from urllib.parse import urlencode
 
 import requests
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 #
 # Documentation
@@ -99,3 +99,9 @@ class Postgres:
             if_exists="append",
             index=False,
         )
+
+    def execute_raw_query(self, query):
+        connection = self.engine.connect()
+        connection.execute(text(query))
+        print(f"ejecute : {text(query)} ")
+        connection.close()
