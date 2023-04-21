@@ -14,7 +14,7 @@ class Queris_Manager:
             "track_ranking",
         ]
 
-    def execute_all_tasks(self):        
+    def execute_all_tasks(self):
         for task in self.sql_tasks:
             self.execute_task(task)
         self.execute_cleaning_task()
@@ -29,5 +29,3 @@ class Queris_Manager:
 
     def execute_cleaning_task(self):
         self.execute_task(self.cleaning_task)
-
-
