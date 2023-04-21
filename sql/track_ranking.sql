@@ -9,6 +9,11 @@ INSERT INTO
    FROM
       workspace.tracks t;
 -- Add historic records
+DELETE FROM
+   dev.tracks_ranking_history 
+WHERE
+   date = CURRENT_DATE;
+
 INSERT INTO
    dev.tracks_ranking_history 
    SELECT

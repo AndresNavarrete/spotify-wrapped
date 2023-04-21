@@ -4,7 +4,7 @@ from urllib.parse import urlencode
 
 import requests
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 #
 # Documentation
@@ -89,13 +89,19 @@ class Postgres:
     def set_engine(self):
         uri_str = f"postgresql+psycopg2://{self.PG_USER}:{self.PG_PASS}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
         self.engine = create_engine(uri_str)
-        self.conn = self.engine.connect()
 
     def write_workspace(self, data, table_name):
-        data.to_sql(
-            table_name,
-            con=self.conn,
-            schema="workspace",
-            if_exists="append",
-            index=False,
-        )
+        with self.engine.connect() as connection:
+            data.to_sql(
+                table_name,
+                con=connection,
+                schema="workspace",
+                if_exists="append",
+                index=False,
+            )
+
+    def execute_raw_query(self, query):
+        with self.engine.connect() as connection:
+            trans = connection.begin()
+            connection.execute(text(query))
+            trans.commit()
