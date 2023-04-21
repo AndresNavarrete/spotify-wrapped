@@ -3,7 +3,7 @@ import os
 from src.clients import Postgres
 
 
-class Queris_Manager:
+class Queries_Manager:
     def __init__(self):
         self.postgres = Postgres()
         self.template_searchpath = os.getenv("ROOT_PATH") + "/sql"

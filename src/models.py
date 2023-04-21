@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Track:
     def __init__(self, item):
         self.id = item["id"]
@@ -12,6 +16,7 @@ class Track:
         return f"{self.artist:30} | {self.name:30}"
 
 
+@dataclass
 class Artist:
     def __init__(self, item):
         self.id = item["id"]

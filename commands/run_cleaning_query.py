@@ -1,4 +1,4 @@
-from src.queris_manager import Queris_Manager
+from src.queries_manager import Queries_Manager
 
 if __name__ == "__main__":
-    Queris_Manager().execute_cleaning_task()
+    Queries_Manager().execute_cleaning_task()

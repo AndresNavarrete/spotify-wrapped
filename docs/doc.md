@@ -37,3 +37,13 @@ Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-
 * `PIPENV_PATH` the python envitoment location. `pipenv --venv` is recommended to find the correct path.
 
 Also, add the `postgres_spotify_app` connection to the connection using the same data from the Database setup section.
+
+## Simple Crontab Setup
+
+If you need a simpler version of the ETL without using Airflow you can set a cronjob using the following command 
+
+```sh
+crontab -l | { cat; echo "0 0 * * * bash bash/spotify_daily_etl.sh"; } | crontab -
+```
+
+
