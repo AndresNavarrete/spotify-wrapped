@@ -29,7 +29,11 @@ CLIENT_SECRET=""
 REFRESH_TOKEN=""
 ```
 
-## Airflow setup
+
+## ETL setup
+
+The data pipeline is modelated as a Extract-Transform-Load process. The recommendation is to use Airflow as the orquestator, but a simple cronjob would to the trick if Airflow is too much for your server.
+### Airflow setup
 
 Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-airflow/stable/start.html) to install Airflow locally. In addition, install the [Postgres Airflow plugin](https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/index.html#installation). Then, add the folowing variables .
 
@@ -38,12 +42,12 @@ Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-
 
 Also, add the `postgres_spotify_app` connection to the connection using the same data from the Database setup section.
 
-## Simple Crontab Setup
+### Simple Crontab Setup
 
 If you need a simpler version of the ETL without using Airflow you can set a cronjob using the following command 
 
 ```sh
-crontab -l | { cat; echo "0 0 * * * bash bash/spotify_daily_etl.sh"; } | crontab -
+crontab -l | { cat; echo "0 0 * * * cd <Repository absolute parh> && bash bash/spotify_daily_etl.sh"; } | crontab -
 ```
 
 
