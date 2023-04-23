@@ -21,7 +21,7 @@ with DAG(
     dag_id="spotify_app_daily_etl",
     default_args=default_args,
     start_date=datetime(2023, 3, 18),
-    schedule_interval="0 6 * * *",
+    schedule_interval="@daily",
     catchup=False,
     template_searchpath=[ROOT_PATH],
 ) as dag:
