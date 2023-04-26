@@ -48,6 +48,11 @@ with DAG(
         postgres_conn_id="postgres_spotify_app",
         sql="sql/track_ranking.sql",
     )
+    artist_ranking = PostgresOperator(
+        task_id="artist_ranking",
+        postgres_conn_id="postgres_spotify_app",
+        sql="sql/artist_ranking.sql",
+    )
     clean_workspace = PostgresOperator(
         task_id="clean_workspace",
         postgres_conn_id="postgres_spotify_app",
@@ -59,5 +64,6 @@ with DAG(
         >> upsert_tracks
         >> upsert_artists
         >> track_ranking
+        >> artist_ranking
         >> clean_workspace
     )

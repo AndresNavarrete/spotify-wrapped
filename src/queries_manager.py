@@ -12,6 +12,7 @@ class Queries_Manager:
             "upsert_artists",
             "upsert_tracks",
             "track_ranking",
+            "artist_ranking",
         ]
 
     def execute_all_tasks(self):
