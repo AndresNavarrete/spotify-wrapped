@@ -41,6 +41,21 @@ CREATE TABLE dev.tracks_ranking_history (
 	CONSTRAINT tracks_ranking_history_fk FOREIGN KEY (track_id) REFERENCES dev.tracks(id)
 );
 
+CREATE TABLE dev.artists_ranking (
+	artist_id varchar NOT NULL,
+	ranking int8 NOT NULL,
+	CONSTRAINT artists_ranking_pk PRIMARY KEY (ranking),
+	CONSTRAINT artists_ranking_fk FOREIGN KEY (artist_id) REFERENCES dev.artists(id)
+);
+
+CREATE TABLE dev.artists_ranking_history (
+	"date" date NOT NULL,
+	ranking int8 NOT NULL,
+	artist_id varchar NOT NULL,
+	CONSTRAINT artists_ranking_history_pk PRIMARY KEY (date, ranking),
+	CONSTRAINT artists_ranking_history_fk FOREIGN KEY (artist_id) REFERENCES dev.artists(id)
+);
+
 -- Create tables in workspace
 
 CREATE TABLE workspace.artists (
@@ -97,4 +112,19 @@ CREATE TABLE prod.tracks_ranking_history (
 	track_id varchar NOT NULL,
 	CONSTRAINT tracks_ranking_history_pk PRIMARY KEY (date, ranking),
 	CONSTRAINT tracks_ranking_history_fk FOREIGN KEY (track_id) REFERENCES prod.tracks(id)
+);
+
+CREATE TABLE prod.artists_ranking (
+	artist_id varchar NOT NULL,
+	ranking int8 NOT NULL,
+	CONSTRAINT artists_ranking_pk PRIMARY KEY (ranking),
+	CONSTRAINT artists_ranking_fk FOREIGN KEY (artist_id) REFERENCES prod.artists(id)
+);
+
+CREATE TABLE prod.artists_ranking_history (
+	"date" date NOT NULL,
+	ranking int8 NOT NULL,
+	artist_id varchar NOT NULL,
+	CONSTRAINT artists_ranking_history_pk PRIMARY KEY (date, ranking),
+	CONSTRAINT artists_ranking_history_fk FOREIGN KEY (artist_id) REFERENCES prod.artists(id)
 );
