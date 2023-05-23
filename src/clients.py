@@ -2,6 +2,7 @@ import base64
 import os
 from urllib.parse import urlencode
 
+import pandas as pd
 import requests
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
@@ -105,3 +106,6 @@ class Postgres:
             trans = connection.begin()
             connection.execute(text(query))
             trans.commit()
+
+    def fetch_query(self, query):
+        return pd.read_sql(sql=query, con=self.engine)
