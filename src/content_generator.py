@@ -22,7 +22,7 @@ class ContentGenerator:
         return df
         
     
-    def add_artist_image(self, ax, url, x, y, zoom=0.06, border_width=3):
+    def add_artist_image(self, ax, url, x, y, zoom=0.07, border_width=3):
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
 
@@ -52,7 +52,7 @@ class ContentGenerator:
 
 
     def make_chart(self):
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(10, 8))
         fig.set_facecolor("none")
 
         df = self.get_data()
@@ -115,7 +115,7 @@ class ContentGenerator:
         ax.yaxis.set_major_locator(MaxNLocator(integer=True))
         # plt.legend(title='Artist', loc='best')
         plt.savefig(
-            f"{self.items_name}_ranking_trend.png",
+            f"img/{self.items_name}_ranking_trend.png",
             dpi=300,
             format="png",
             bbox_inches="tight",
