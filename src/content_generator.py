@@ -91,7 +91,7 @@ class ContentGenerator:
                 color=colors[i % len(colors)],
                 linestyle=linestyles[i % len(linestyles)],
                 label=artist,
-                linewidth=4,
+                linewidth=3,
             )
 
         for index, row in recent_ranking.iterrows():
