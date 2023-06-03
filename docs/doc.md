@@ -33,12 +33,19 @@ REFRESH_TOKEN=""
 ## ETL setup
 
 The data pipeline is modelated as a Extract-Transform-Load process. The recommendation is to use Airflow as the orquestator, but a simple cronjob would to the trick if Airflow is too much for your server.
-### Airflow setup
 
-Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-airflow/stable/start.html) to install Airflow locally. In addition, install the [Postgres Airflow plugin](https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/index.html#installation). Then, add the folowing variables .
+### Airflow setup: Run locally
+Basically follow [this quickstart guide](https://airflow.apache.org/docs/apache-airflow/stable/start.html) to install Airflow locally. In addition, install the [Postgres Airflow plugin](https://airflow.apache.org/docs/apache-airflow-providers-postgres/stable/index.html#installation). 
 
-* `ROOT_PATH`: The ablosulte root path og the project 
-* `PIPENV_PATH` the python envitoment location. `pipenv --venv` is recommended to find the correct path.
+### Airflow setup: Run on container (recommended)
+
+Build the image with `docker-compose build` and run the cointainer with `docker-compose up`. For more detailed instruction you can read [Running Airflow in Docker
+](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#running-airflow-in-docker)
+
+
+Regardless of the installation chosen, add the folowing variables .
+
+* `ROOT_PATH`: The absolute root path of the project 
 
 Also, add the `postgres_spotify_app` connection to the connection using the same data from the Database setup section.
 
