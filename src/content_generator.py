@@ -25,6 +25,8 @@ class ContentGenerator:
     def add_artist_image(self, ax, url, x, y, zoom=0.07, border_width=3):
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
+        img.thumbnail((640, 640), Image.Resampling.LANCZOS)
+
 
         # Create a circular mask
         mask = Image.new("L", img.size, 0)
@@ -52,7 +54,7 @@ class ContentGenerator:
 
 
     def make_chart(self):
-        fig, ax = plt.subplots(figsize=(10, 8))
+        fig, ax = plt.subplots(figsize=(10, 9))
         fig.set_facecolor("none")
 
         df = self.get_data()
@@ -67,18 +69,19 @@ class ContentGenerator:
         # Define colors and line styles for each artist
         colors = [
             "#fd7f6f",
-            "#7eb0d5",
-            "#b2e061",
-            "#bd7ebe",
+            "#0093ff",
+            "#9ff20f",
+            "#b84cba",
             "#ffb55a",
             "#ffee65",
-            "#beb9db",
-            "#fdcce5",
-            "#8bd3c7",
+            "#1ed8e6",
+            "#f23fe6",
+            "#ad104f",
         ]
 
 
-        linestyles = ["--"]
+
+        linestyles = ["solid"]
 
         # Plot each artist's trend individually
         for i, (artist, trend) in enumerate(pv.iterrows()):
@@ -88,16 +91,16 @@ class ContentGenerator:
                 color=colors[i % len(colors)],
                 linestyle=linestyles[i % len(linestyles)],
                 label=artist,
-                linewidth=5,
+                linewidth=3,
             )
 
         for index, row in recent_ranking.iterrows():
             self.add_artist_image(ax, row[self.item_url_name], row["date"], row["ranking"])
-
-        ax.set_title(f"Top {self.items_name} trends", fontsize=14, color="#2f3030")
-        ax.set_xlabel("Weeks", fontsize=14, color="#2f3030")
-        ax.set_ylabel("Ranking", fontsize=14, color="#2f3030")
-        gray_color = (0.5, 0.5, 0.4)  # RGB values for gray (0.5, 0.5, 0.5)
+        TEXT_COLOR = '#1f1d1f'
+        ax.set_title(f"Top {self.items_name} trends", fontsize=20, color=TEXT_COLOR)
+        ax.set_xlabel("Weeks", fontsize=16, color=TEXT_COLOR)
+        ax.set_ylabel("Ranking", fontsize=16, color=TEXT_COLOR)
+        gray_color = (0.5, 0.5, 0.5)  # RGB values for gray (0.5, 0.5, 0.5)
         fig.set_facecolor(gray_color)
         ax.set_facecolor(gray_color)
         ax.grid(axis="both")
