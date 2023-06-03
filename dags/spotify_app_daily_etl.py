@@ -6,13 +6,11 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 ROOT_PATH = Variable.get("ROOT_PATH")
-PIPENV_PATH = Variable.get("PIPENV_PATH")
 
 default_args = {
-    "owner": "Andres_Navarrete",
+    "owner": "github.com/AndresNavarrete",
     "env": {
         "ROOT_PATH": ROOT_PATH,
-        "PIPENV_PATH": PIPENV_PATH,
         "PYTHONPATH": ROOT_PATH,
     },
 }
