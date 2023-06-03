@@ -1,2 +1,2 @@
 #!/bin/bash
-cd $ROOT_PATH && $PIPENV_PATH commands/run_all_queries.py 
+cd $ROOT_PATH && python3 commands/run_all_queries.py 
