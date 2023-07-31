@@ -17,7 +17,7 @@ select
 from
 	tracks t
 where
-	ranking <= 10
+	ranking <= 3
 	and image_url notnull
 group by
 	1 , 2

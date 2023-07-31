@@ -13,7 +13,7 @@ select
 from
 	artists t
 where
-	ranking <= 10
+	ranking <= 3
 	and image_url notnull and name notnull 
 group by
 	1, 2
