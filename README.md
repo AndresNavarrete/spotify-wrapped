@@ -8,8 +8,11 @@ Data is fetched from [Spotify API](https://developer.spotify.com/) and stored in
 
 <img src="/img/project_diagram.png" alt="Project diagram" width="100%"/>
 
-## Recent artist trends
-<img src="/img/artist_ranking_trend.png" alt="Artists" width="100%"/>
+## Top artists
+<img src="/img/ranking_artists.png" alt="Artists" width="100%"/>
+
+## Top songs
+<img src="/img/ranking_songs.png" alt="Songs" width="100%"/>
 
 # Documentation
 ## Table of Contents <!-- omit in toc -->

@@ -5,28 +5,27 @@ import pandas as pd
 import requests
 from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from matplotlib.ticker import MaxNLocator
-from PIL import ImageDraw, ImageOps, Image
+from PIL import Image, ImageDraw, ImageOps
 
 from src.clients import Postgres
+
 
 class ContentGenerator:
     def __init__(self, query, items_name, item_url_name):
         self.query = query
         self.items_name = items_name
         self.item_url_name = item_url_name
-    
+
     def get_data(self):
         postgres = Postgres()
         df = postgres.fetch_query(self.query)
         df["date"] = pd.to_datetime(df["date"])
         return df
-        
-    
+
     def add_artist_image(self, ax, url, x, y, zoom=0.07, border_width=3):
         response = requests.get(url)
         img = Image.open(BytesIO(response.content))
         img.thumbnail((640, 640), Image.Resampling.LANCZOS)
-
 
         # Create a circular mask
         mask = Image.new("L", img.size, 0)
@@ -38,11 +37,11 @@ class ContentGenerator:
         img_circular.putalpha(mask)
 
         # Create a new image with a transparent background
-        img_with_border = Image.new('RGBA', img_circular.size, (0, 0, 0, 0))
+        img_with_border = Image.new("RGBA", img_circular.size, (0, 0, 0, 0))
         draw = ImageDraw.Draw(img_with_border)
 
         # Draw the black border circle
-        draw.ellipse((0, 0) + img_with_border.size, outline='black', width=border_width)
+        draw.ellipse((0, 0) + img_with_border.size, outline="black", width=border_width)
 
         # Paste the circular image onto the new image
         img_with_border.alpha_composite(img_circular)
@@ -51,7 +50,6 @@ class ContentGenerator:
         imagebox = OffsetImage(img_with_border, zoom=zoom)
         ab = AnnotationBbox(imagebox, (x, y), frameon=False)
         ax.add_artist(ab)
-
 
     def make_chart(self):
         fig, ax = plt.subplots(figsize=(10, 9))
@@ -63,7 +61,11 @@ class ContentGenerator:
         # Create a pivot table to group the ranking data by the artist and the year
         # plt.style.use('ggplot')
         pv = pd.pivot_table(
-            df, index=df[self.items_name], columns=df["date"], values="ranking", aggfunc="max"
+            df,
+            index=df[self.items_name],
+            columns=df["date"],
+            values="ranking",
+            aggfunc="max",
         )
 
         # Define colors and line styles for each artist
@@ -79,8 +81,6 @@ class ContentGenerator:
             "#ad104f",
         ]
 
-
-
         linestyles = ["solid"]
 
         # Plot each artist's trend individually
@@ -95,8 +95,10 @@ class ContentGenerator:
             )
 
         for index, row in recent_ranking.iterrows():
-            self.add_artist_image(ax, row[self.item_url_name], row["date"], row["ranking"])
-        TEXT_COLOR = '#1f1d1f'
+            self.add_artist_image(
+                ax, row[self.item_url_name], row["date"], row["ranking"]
+            )
+        TEXT_COLOR = "#1f1d1f"
         ax.set_title(f"Top {self.items_name} trends", fontsize=20, color=TEXT_COLOR)
         ax.set_xlabel("Weeks", fontsize=16, color=TEXT_COLOR)
         ax.set_ylabel("Ranking", fontsize=16, color=TEXT_COLOR)
