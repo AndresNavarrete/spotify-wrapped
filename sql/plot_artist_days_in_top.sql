@@ -18,5 +18,5 @@ where
 group by
 	1, 2
 order by
-	3 desc
+	3 desc , 1 asc 
 limit 10;

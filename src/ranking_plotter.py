@@ -37,14 +37,14 @@ class RankingImageGenerator:
         return np.array(img)
 
     @staticmethod
-    def offset_image(coord, url, ax):
+    def offset_image(coord, url, ax, offset):
         img = RankingImageGenerator.get_image(url)
         im = OffsetImage(img, zoom=0.25)
         im.image.axes = ax
 
         ab = AnnotationBbox(
             im,
-            (5, coord),
+            (offset, coord),
             xybox=(-30.0, 0.0),
             frameon=False,
             xycoords="data",
@@ -72,8 +72,11 @@ class RankingImageGenerator:
         fig.set_facecolor(BACKGROUND_COLOR)
         ax.set_facecolor(BACKGROUND_COLOR)
 
+        max_val = max(values)
+        print("max_name_length: ", max_val)
+        offset = max_val // 25
         for i, url in enumerate(image_urls):
-            self.offset_image(i, url, ax)
+            self.offset_image(i, url, ax, offset)
 
         return fig, ax
 
