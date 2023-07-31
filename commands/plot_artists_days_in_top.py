@@ -6,4 +6,3 @@ if __name__ == "__main__":
     RankingImageGenerator(
         query, title="Top artists - days in top 3"
     ).save_ranking_image("ranking_artists.png")
-
