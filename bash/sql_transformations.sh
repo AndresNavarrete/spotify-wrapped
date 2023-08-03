@@ -1,2 +1,3 @@
 #!/bin/bash
-cd $ROOT_PATH && python3 commands/run_all_queries.py 
+echo sql_transformations
+cd $ROOT_PATH && pipenv run python3 commands/run_all_queries.py 
