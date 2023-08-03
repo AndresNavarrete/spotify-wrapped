@@ -75,5 +75,5 @@ Also, add the `postgres_spotify_app` connection to the connection using the same
 If you need a simpler version of the ETL without using Airflow you can set a cronjob using the following command 
 
 ```sh
-crontab -l | { cat; echo "0 0 * * * cd <Repository absolute path> && bash bash/spotify_daily_etl.sh"; } | crontab -
+crontab -l | { cat; echo "0 0 * * * (date; cd <Repository absolute path> && bash bash/spotify_daily_etl.sh) >> logs/spotify_logs.log 2>&1 "; } | crontab -
 ```
