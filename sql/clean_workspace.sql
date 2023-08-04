@@ -1,3 +1,3 @@
 -- Clean workspace
-TRUNCATE TABLE workspace.tracks;
-TRUNCATE TABLE workspace.artists;
+TRUNCATE TABLE public.workspace_tracks;
+TRUNCATE TABLE public.workspace_artists;

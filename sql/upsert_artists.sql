@@ -1,10 +1,10 @@
 -- Insert new artists and update old records
 INSERT INTO
-   dev.artists 
+   public.artists 
    SELECT
       * 
    FROM
-      workspace.artists
+      public.workspace_artists
       ON conflict (id) DO 
       UPDATE
       SET

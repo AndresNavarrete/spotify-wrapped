@@ -1,10 +1,10 @@
 -- Insert new tracks and update old records
 INSERT INTO
-   dev.tracks 
+   public.tracks 
    SELECT
       * 
    FROM
-      workspace.tracks
+      public.workspace_tracks
       ON conflict (id) DO 
       UPDATE
       SET

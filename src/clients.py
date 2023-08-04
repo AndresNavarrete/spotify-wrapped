@@ -94,9 +94,9 @@ class Postgres:
     def write_workspace(self, data, table_name):
         with self.engine.connect() as connection:
             data.to_sql(
-                table_name,
+                f"workspace_{table_name}",
                 con=connection,
-                schema="workspace",
+                schema="public",
                 if_exists="append",
                 index=False,
             )
