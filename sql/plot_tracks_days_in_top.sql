@@ -4,10 +4,10 @@ with tracks as (
 		t.name,
 		a.image_url
 	from
-		dev.tracks_ranking_history trh
-	left join dev.tracks t on
+		public.tracks_ranking_history trh
+	left join public.tracks t on
 		trh.track_id = t.id
-	left join dev.artists a on
+	left join public.artists a on
 		a.id = t.artist_id
 )
 select

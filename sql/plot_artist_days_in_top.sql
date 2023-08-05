@@ -2,8 +2,8 @@ with artists as (
 	select
 			*
 	from
-			dev.artists_ranking_history trh
-	left join dev.artists t on
+			public.artists_ranking_history trh
+	left join public.artists t on
 			trh.artist_id = t.id
 )
 select
