@@ -1,8 +1,29 @@
+# Spotify wrapped
+
+[![GitHub Super-Linter](https://github.com/AndresNavarrete/spotify-wrapped/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
+The goal of this repository is to show my personal Spotify Wrapped and some trends on my most listened artists.
+
+Data is fetched from [Spotify API](https://developer.spotify.com/) and stored in a [Postgres](https://www.postgresql.org/) database on a daily basis. This process is orquestrated using [Apache Airflow](https://airflow.apache.org/) and runs on [Docker containers](https://www.docker.com/). 
+
+<img src="/img/project_diagram.png" alt="Project diagram" width="100%"/>
+
+## Top artists
+<img src="/img/ranking_artists.png" alt="Artists" width="100%"/>
+
+## Top songs
+<img src="/img/ranking_songs.png" alt="Songs" width="100%"/>
 
 # Documentation
+## Table of Contents <!-- omit in toc -->
+
+- [Database Set up](#database-setup)
+- [Spotify API set up](#spotify-api-setup)
+- [ETL set up](#etl-setup)
+  - [Airflow: Run locally](#airflow-setup-run-locally)
+  - [Airflow: Run on container](#airflow-setup-run-on-container-recommended)
+  - [Simple Crontab](#simple-crontab-setup)
 ## Database setup
-
-
 I have followed [this tutorial](https://devopscube.com/install-postgresql-on-ubuntu/) to set up Postgres database on a Ubuntu server. To connect with it we must configure the following enviroment variables. I recommend to have a different enviroment for production and develop. 
 
 ```sh
@@ -54,7 +75,5 @@ Also, add the `postgres_spotify_app` connection to the connection using the same
 If you need a simpler version of the ETL without using Airflow you can set a cronjob using the following command 
 
 ```sh
-crontab -l | { cat; echo "0 0 * * * cd <Repository absolute parh> && bash bash/spotify_daily_etl.sh"; } | crontab -
+crontab -l | { cat; echo "0 0 * * * (date; cd <Repository absolute path> && bash bash/spotify_daily_etl.sh) >> logs/spotify_logs.log 2>&1 "; } | crontab -
 ```
-
-

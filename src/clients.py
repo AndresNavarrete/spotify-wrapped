@@ -78,11 +78,11 @@ class Spotify:
 class Postgres:
     def __init__(self):
         load_dotenv()
-        self.PG_HOST = os.getenv("PG_HOST")
-        self.PG_PORT = os.getenv("PG_PORT")
-        self.PG_DB = os.getenv("PG_DB")
-        self.PG_USER = os.getenv("PG_USER")
-        self.PG_PASS = os.getenv("PG_PASS")
+        self.PG_HOST = os.getenv("POSTGRES_HOST")
+        self.PG_PORT = os.getenv("POSTGRES_PORT")
+        self.PG_DB = os.getenv("POSTGRES_DB")
+        self.PG_USER = os.getenv("POSTGRES_USER")
+        self.PG_PASS = os.getenv("POSTGRES_PASSWORD")
         self.engine = None
         self.conn = None
         self.set_engine()
