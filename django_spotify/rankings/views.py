@@ -1,6 +1,8 @@
-from django.shortcuts import render
 from django.http import JsonResponse
-from .models import TrackRanking, ArtistsRanking
+from django.shortcuts import render
+
+from .models import ArtistsRanking, TrackRanking
+
 
 def tracks_ranking(request):
     data = list(TrackRanking.objects.values())

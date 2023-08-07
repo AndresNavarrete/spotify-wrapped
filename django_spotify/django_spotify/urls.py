@@ -18,7 +18,6 @@ from django.urls import path
 from rankings import views
 
 urlpatterns = [
-    path('artists_ranking/', views.artists_ranking),
-    path('tracks_ranking/', views.tracks_ranking),
+    path("artists_ranking/", views.artists_ranking),
+    path("tracks_ranking/", views.tracks_ranking),
 ]
-

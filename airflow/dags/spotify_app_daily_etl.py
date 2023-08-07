@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.bash_operator import BashOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
+
+from airflow import DAG
 
 ROOT_PATH = Variable.get("ROOT_PATH")
 
