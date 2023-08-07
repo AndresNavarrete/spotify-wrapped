@@ -74,3 +74,62 @@ CREATE TABLE public.workspace_tracks (
 	album_image_url varchar NULL,
 	CONSTRAINT workspace_tracks_pk PRIMARY KEY (id)
 );
+-- Create Views
+CREATE 
+OR REPLACE VIEW public.artists_time_in_top AS WITH artists AS 
+(
+   SELECT
+      * 
+   FROM
+      public.artists_ranking_history trh 
+      LEFT JOIN
+         public.artists t 
+         ON trh.artist_id = t.id 
+)
+SELECT
+   name,
+   image_url,
+   COUNT(DISTINCT DATE) AS COUNT 
+FROM
+   artists t 
+WHERE
+   ranking <= 3 
+   AND image_url IS NOT NULL 
+   AND name IS NOT NULL 
+GROUP BY
+   1,
+   2 
+ORDER BY
+   3 DESC,
+   1 ASC LIMIT 10;
+CREATE 
+OR REPLACE VIEW public.tracks_time_in_top AS WITH tracks AS 
+(
+   SELECT
+      trh.*,
+      t.name,
+      a.image_url 
+   FROM
+      public.tracks_ranking_history trh 
+      LEFT JOIN
+         public.tracks t 
+         ON trh.track_id = t.id 
+      LEFT JOIN
+         public.artists a 
+         ON a.id = t.artist_id 
+)
+SELECT
+   name,
+   image_url,
+   COUNT(DISTINCT DATE) 
+FROM
+   tracks t 
+WHERE
+   ranking <= 3 
+   AND image_url NOTNULL 
+GROUP BY
+   1,
+   2 
+ORDER BY
+   3 DESC,
+   1 ASC LIMIT 10;
