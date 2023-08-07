@@ -8,7 +8,7 @@ class ArtistsRanking(models.Model):
 
     class Meta:
         managed = False
-        db_table = "artists_time_in_top"
+        db_table = "public.artists_time_in_top"
 
 
 class TrackRanking(models.Model):
@@ -18,4 +18,4 @@ class TrackRanking(models.Model):
 
     class Meta:
         managed = False
-        db_table = "tracks_time_in_top"
+        db_table = "public.tracks_time_in_top"
