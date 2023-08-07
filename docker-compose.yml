@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -12,11 +12,11 @@ services:
       - db-data:/var/lib/postgresql/data
       - ./db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  web:
+  api_web:
     image: python:3.8
     command: sh -c "pip install django psycopg2-binary && python django_spotify/manage.py runserver 0.0.0.0:8000"
     ports:
-      - "3000:8000"
+      - "${DJANGO_PORT}:8000"
     depends_on:
       - db
     environment:
@@ -27,6 +27,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       DJANGO_ANON_USER: ${DJANGO_ANON_USER}
       DJANGO_ANON_PASSWORD: ${DJANGO_ANON_PASSWORD}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
     volumes:
       - .:/app
     working_dir: /app
