@@ -49,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_spotify.basic_auth_middleware.BasicAuthMiddleware"
 ]
 
 ROOT_URLCONF = "django_spotify.urls"
