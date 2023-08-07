@@ -2,7 +2,8 @@ from django.db import models
 
 
 class ArtistsRanking(models.Model):
-    name = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True)
+    name = models.CharField(max_length=200)
     image_url = models.URLField()
     count = models.IntegerField()
 
@@ -12,7 +13,8 @@ class ArtistsRanking(models.Model):
 
 
 class TrackRanking(models.Model):
-    name = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True)
+    name = models.CharField(max_length=200)
     image_url = models.URLField()
     count = models.IntegerField()
 

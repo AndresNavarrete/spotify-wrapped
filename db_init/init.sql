@@ -87,6 +87,7 @@ OR REPLACE VIEW public.artists_time_in_top AS WITH artists AS
          ON trh.artist_id = t.id 
 )
 SELECT
+   artist_id id,
    name,
    image_url,
    COUNT(DISTINCT DATE) AS COUNT 
@@ -97,11 +98,10 @@ WHERE
    AND image_url IS NOT NULL 
    AND name IS NOT NULL 
 GROUP BY
-   1,
-   2 
+   1,2,3 
 ORDER BY
-   3 DESC,
-   1 ASC LIMIT 10;
+   4 DESC,
+   2 ASC LIMIT 10;
 CREATE 
 OR REPLACE VIEW public.tracks_time_in_top AS WITH tracks AS 
 (
@@ -119,6 +119,7 @@ OR REPLACE VIEW public.tracks_time_in_top AS WITH tracks AS
          ON a.id = t.artist_id 
 )
 SELECT
+   track_id id,
    name,
    image_url,
    COUNT(DISTINCT DATE) 
@@ -128,8 +129,7 @@ WHERE
    ranking <= 3 
    AND image_url NOTNULL 
 GROUP BY
-   1,
-   2 
+   1,2,3 
 ORDER BY
-   3 DESC,
-   1 ASC LIMIT 10;
+   4 DESC,
+   2 ASC LIMIT 10;
