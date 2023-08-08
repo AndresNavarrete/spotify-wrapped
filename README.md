@@ -21,7 +21,7 @@ Data is fetched from [Spotify API](https://developer.spotify.com/) and stored in
   - [Airflow: Run locally](#airflow-setup-run-locally)
   - [Airflow: Run on container](#airflow-setup-run-on-container-recommended)
   - [Simple Crontab](#simple-crontab-setup)
-## Database & Django setup
+## Database & API setup
 The Postgres database runs on docker container. It holds some Django related tables, the historic data of artists, songs and the most recent ranking data. 
 
 
