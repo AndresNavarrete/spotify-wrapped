@@ -61,7 +61,7 @@ class RankingImageGenerator:
 
         fig, ax = plt.subplots(dpi=300)
         TEXT_COLOR = "#1f1d1f"
-        BACKGROUND_COLOR = "#7c7f80"
+        BACKGROUND_COLOR = "#D9D9D9"
         BAR_COLOR = "#18bdde"
         ax.barh(range(len(names)), values, align="center", color=BAR_COLOR)
         ax.set_yticks(range(len(names)))
