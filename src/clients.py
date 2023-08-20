@@ -109,3 +109,21 @@ class Postgres:
 
     def fetch_query(self, query):
         return pd.read_sql(sql=query, con=self.engine)
+
+
+class ExternalAPI:
+    def __init__(self):
+        self.hostname = os.getenv("API_URL")
+        self.user = os.getenv("DJANGO_ANON_USER")
+        self.password = os.getenv("DJANGO_ANON_PASSWORD")
+        self.artists_endpoint = f"{self.hostname}/artists_ranking/"
+        self.tracks_endpoint = f"{self.hostname}/tracks_ranking/"
+
+    def fetch_artists_ranking(self):
+        return requests.get(self.artists_endpoint, auth=self.get_auth())
+
+    def fetch_tracks_ranking(self):
+        return requests.get(self.tracks_endpoint, auth=self.get_auth())
+
+    def get_auth(self):
+        return (self.user, self.password)
