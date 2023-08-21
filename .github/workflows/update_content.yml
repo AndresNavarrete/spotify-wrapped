@@ -1,0 +1,39 @@
+name: update_content
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 2,4,6'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        pip install pipenv
+        pipenv install --dev
+        
+    - name: Run script
+      run: |
+        export PYTHONPATH=$PWD
+        export API_URL=${{ secrets.API_URL }}
+        pipenv run python3 commands/plot_artists_days_in_top.py
+        pipenv run python3 commands/plot_tracks_days_in_top.py
+                
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "${{ secrets.GIT_EMAIL }}"
+        git config --global user.name "${{ secrets.GIT_NAME }}"
+        git add .
+        git commit -m "Auto commit: Update content" || echo "No changes to commit"
+        git push
