@@ -1,4 +1,8 @@
+[![update_content](https://github.com/AndresNavarrete/spotify-wrapped/actions/workflows/update_content.yml/badge.svg?branch=main)](https://github.com/AndresNavarrete/spotify-wrapped/actions/workflows/update_content.yml)
+
+
 # Spotify wrapped
+
 
 The goal of this repository is to show my personal Spotify data with some trends on my most listened artists and songs.
 
