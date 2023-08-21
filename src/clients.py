@@ -109,3 +109,32 @@ class Postgres:
 
     def fetch_query(self, query):
         return pd.read_sql(sql=query, con=self.engine)
+
+
+class ExternalAPI:
+    def __init__(self):
+        self.hostname = os.getenv("API_URL")
+        self.user = os.getenv("DJANGO_ANON_USER")
+        self.password = os.getenv("DJANGO_ANON_PASSWORD")
+        self.artists_endpoint = f"{self.hostname}/artists_ranking/"
+        self.tracks_endpoint = f"{self.hostname}/tracks_ranking/"
+
+    def fetch_artists_ranking(self):
+        response = self.fetch_response(self.artists_endpoint, auth=self.get_auth())
+        return self.get_dataframe_from_response(response)
+
+    def fetch_tracks_ranking(self):
+        response = self.fetch_response(self.tracks_endpoint, auth=self.get_auth())
+        return self.get_dataframe_from_response(response)
+
+    def fetch_response(self, url, auth):
+        response = requests.get(url, auth=auth)
+        if response.status_code != 200:
+            raise ValueError(f"Status code in response: {response.status_code}")
+        return response.json()
+
+    def get_auth(self):
+        return (self.user, self.password)
+
+    def get_dataframe_from_response(self, response):
+        return pd.DataFrame().from_records(response)
