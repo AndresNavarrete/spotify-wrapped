@@ -2,23 +2,25 @@ from io import BytesIO
 
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 import requests
 from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from PIL import Image, ImageDraw
 
-from src.clients import Postgres
+from src.clients import ExternalAPI
 
 
 class RankingImageGenerator:
-    def __init__(self, query, title):
+    def __init__(self, items, title):
         self.title = title
-        self.df = self.get_data(query)
+        self.df = self.get_data(items)
         self.df.sort_values("count", ascending=True, inplace=True)
 
-    def get_data(self, query):
-        postgres = Postgres()
-        return postgres.fetch_query(query)
+    def get_data(self, items):
+        api = ExternalAPI()
+        if items == "artists":
+            return api.fetch_artists_ranking()
+        elif items == "tracks":
+            return api.fetch_tracks_ranking()
 
     @staticmethod
     def get_image(url):

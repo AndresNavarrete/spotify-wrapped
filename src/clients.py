@@ -120,10 +120,21 @@ class ExternalAPI:
         self.tracks_endpoint = f"{self.hostname}/tracks_ranking/"
 
     def fetch_artists_ranking(self):
-        return requests.get(self.artists_endpoint, auth=self.get_auth())
+        response = self.fetch_response(self.artists_endpoint, auth=self.get_auth())
+        return self.get_dataframe_from_response(response)
 
     def fetch_tracks_ranking(self):
-        return requests.get(self.tracks_endpoint, auth=self.get_auth())
+        response = self.fetch_response(self.tracks_endpoint, auth=self.get_auth())
+        return self.get_dataframe_from_response(response)
+
+    def fetch_response(self, url, auth):
+        response = requests.get(url, auth=auth)
+        if response.status_code != 200:
+            raise ValueError(f"Status code in response: {response.status_code}")
+        return response.json()
 
     def get_auth(self):
         return (self.user, self.password)
+
+    def get_dataframe_from_response(self, response):
+        return pd.DataFrame().from_records(response)
