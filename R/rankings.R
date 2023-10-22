@@ -84,7 +84,7 @@ p <- ggplot(data = new_df, aes(x = value, y = reorder(name, ave(value, name, FUN
     plot.title = element_text(size = 20, face = "bold") 
   )
 
-ggsave(filename = "img/tracks.png", plot = p, dpi = 600, width = 12, height = 8)
+ggsave(filename = "img/ranking_songs.png", plot = p, dpi = 600, width = 12, height = 8)
 
 
 # Date on top Plot - Tracks----------------------------------------------------------------------
@@ -124,4 +124,4 @@ p <- ggplot(data = new_df, aes(x = value, y = reorder(name, ave(value, name, FUN
     plot.title = element_text(size = 20, face = "bold") 
   )
 
-ggsave(filename = "img/artists.png", plot = p, dpi = 600,  width = 12, height = 8)
+ggsave(filename = "img/ranking_artists.png", plot = p, dpi = 600,  width = 12, height = 8)
