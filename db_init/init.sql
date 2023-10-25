@@ -102,6 +102,7 @@ GROUP BY
 ORDER BY
    4 DESC,
    2 ASC LIMIT 10;
+
 CREATE 
 OR REPLACE VIEW public.tracks_time_in_top AS WITH tracks AS 
 (
@@ -133,3 +134,55 @@ GROUP BY
 ORDER BY
    4 DESC,
    2 ASC LIMIT 10;
+
+CREATE OR REPLACE VIEW public.artists_time_in_top_details
+AS WITH artists AS (
+         SELECT trh.date,
+            trh.ranking,
+            trh.artist_id,
+            trh.updated_at,
+            t_1.id,
+            t_1.name,
+            t_1.spotify_url,
+            t_1.image_url,
+            t_1.updated_at
+           FROM artists_ranking_history trh
+             LEFT JOIN public.artists t_1 ON trh.artist_id::text = t_1.id::text
+        )
+ SELECT t.artist_id AS id,
+    t.name,
+    t.image_url,
+    count(DISTINCT t.date) AS count_total,
+    count(DISTINCT t.date) FILTER (WHERE t.date >= (CURRENT_DATE - '7 days'::interval)) AS count_last_7,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '7 days'::interval) AND t.date >= (CURRENT_DATE - '1 mon'::interval)) AS count_last_30,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '1 mon'::interval) AND t.date >= (CURRENT_DATE - '2 mons'::interval)) AS count_last_60,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '2 mons'::interval)) AS count_prev
+   FROM artists t(date, ranking, artist_id, updated_at, id, name, spotify_url, image_url, updated_at_1)
+  WHERE t.ranking <= 3 AND t.image_url IS NOT NULL AND t.name IS NOT NULL
+  GROUP BY t.artist_id, t.name, t.image_url
+  ORDER BY (count(DISTINCT t.date)) DESC, t.name;
+  
+CREATE OR REPLACE VIEW public.tracks_time_in_top_details
+AS WITH tracks AS (
+         SELECT trh.date,
+            trh.ranking,
+            trh.track_id,
+            trh.updated_at,
+            t_1.name,
+            a.image_url
+           FROM tracks_ranking_history trh
+             LEFT JOIN public.tracks t_1 ON trh.track_id::text = t_1.id::text
+             LEFT JOIN artists a ON a.id::text = t_1.artist_id::text
+        )
+ SELECT t.track_id AS id,
+    t.name,
+    t.image_url,
+    count(DISTINCT t.date) AS count_total,
+    count(DISTINCT t.date) FILTER (WHERE t.date >= (CURRENT_DATE - '7 days'::interval)) AS count_last_7,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '7 days'::interval) AND t.date >= (CURRENT_DATE - '1 mon'::interval)) AS count_last_30,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '1 mon'::interval) AND t.date >= (CURRENT_DATE - '2 mons'::interval)) AS count_last_60,
+    count(DISTINCT t.date) FILTER (WHERE t.date < (CURRENT_DATE - '2 mons'::interval)) AS count_prev
+   FROM tracks t
+  WHERE t.ranking <= 3 AND t.image_url IS NOT NULL
+  GROUP BY t.track_id, t.name, t.image_url
+  ORDER BY (count(DISTINCT t.date)) DESC, t.name;
