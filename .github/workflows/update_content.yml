@@ -34,9 +34,16 @@ jobs:
     - name: Set up R
       uses: r-lib/actions/setup-r@v2
 
-    - name: Install R dependencies
-      run: |
-        Rscript -e 'install.packages(c("ggplot2", "jsonlite", "ggimage", "cropcircles", "dplyr", "tidyr"))'
+    - name: Install packages
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        packages: |
+          any::ggplot2 
+          any::jsonlite
+          any::ggimage
+          any::cropcircles
+          any::dplyr
+          any::tidyr
         
     - name: Generate content
       run: |
