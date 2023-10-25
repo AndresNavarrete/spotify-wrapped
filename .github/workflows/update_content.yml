@@ -22,7 +22,26 @@ jobs:
       run: |
         pip install pipenv
         pipenv install --dev
+
+    - name: Download JSON data
+      run: |
+        export PYTHONPATH=$PWD
+        export API_URL=${{ secrets.API_URL }}
+        export DJANGO_ANON_USER=${{ secrets.DJANGO_ANON_USER }}
+        export DJANGO_ANON_PASSWORD=${{ secrets.DJANGO_ANON_PASSWORD }}
+        pipenv run python3 commands/download_ranking_data.py
+
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v1
+
+    - name: Install R dependencies
+      run: |
+        Rscript -e 'install.packages(c("ggplot2", "jsonlite", "ggimage", "cropcircles", "dplyr", "tidyr"))'
         
+    - name: Generate content
+      run: |
+        Rscript R/generate_content.R
+
     - name: Run script
       run: |
         export PYTHONPATH=$PWD
