@@ -1,5 +1,4 @@
 import base64
-import json
 import os
 from urllib.parse import urlencode
 
@@ -141,13 +140,20 @@ class ExternalAPI:
         return pd.DataFrame().from_records(response)
 
     def download_artist_ranking(self, path_to_download):
+        self.check_directory_existence(path_to_download)
         artists = self.fetch_artists_ranking()
         json_data = artists.to_json(orient="records", indent=6)
         with open(path_to_download, "w", encoding="utf-8") as file:
             file.write(json_data)
 
     def download_tracks_ranking(self, path_to_download):
+        self.check_directory_existence(path_to_download)
         tracks = self.fetch_tracks_ranking()
         json_data = tracks.to_json(orient="records", indent=6)
         with open(path_to_download, "w", encoding="utf-8") as file:
             file.write(json_data)
+
+    def check_directory_existence(self, path_to_download):
+        directory = os.path.dirname(path_to_download)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
