@@ -48,15 +48,6 @@ jobs:
     - name: Generate content
       run: |
         Rscript R/generate_content.R
-
-    - name: Run script
-      run: |
-        export PYTHONPATH=$PWD
-        export API_URL=${{ secrets.API_URL }}
-        export DJANGO_ANON_USER=${{ secrets.DJANGO_ANON_USER }}
-        export DJANGO_ANON_PASSWORD=${{ secrets.DJANGO_ANON_PASSWORD }}
-        pipenv run python3 commands/plot_artists_days_in_top.py
-        pipenv run python3 commands/plot_tracks_days_in_top.py
                 
     - name: Commit and push changes
       run: |
