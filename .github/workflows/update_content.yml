@@ -22,15 +22,32 @@ jobs:
       run: |
         pip install pipenv
         pipenv install --dev
-        
-    - name: Run script
+
+    - name: Download JSON data
       run: |
         export PYTHONPATH=$PWD
         export API_URL=${{ secrets.API_URL }}
         export DJANGO_ANON_USER=${{ secrets.DJANGO_ANON_USER }}
         export DJANGO_ANON_PASSWORD=${{ secrets.DJANGO_ANON_PASSWORD }}
-        pipenv run python3 commands/plot_artists_days_in_top.py
-        pipenv run python3 commands/plot_tracks_days_in_top.py
+        pipenv run python3 commands/download_ranking_data.py
+
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+
+    - name: Install packages
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        packages: |
+          any::ggplot2 
+          any::jsonlite
+          any::ggimage
+          any::cropcircles
+          any::dplyr
+          any::tidyr
+        
+    - name: Generate content
+      run: |
+        Rscript R/generate_content.R
                 
     - name: Commit and push changes
       run: |
